@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,21 +8,21 @@ namespace MuseumApp.MVVM.View
     /// </summary>
     public partial class AuthView : UserControl
     {
-        public AuthView()  
+        public AuthView()
         {
             InitializeComponent();
         }
 
-        private void enterButton_Click(object sender, RoutedEventArgs e)
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            string log, pas;
-            log = Core.Encrypter.GetHash(loginTb.Text); 
-            pas = Core.Encrypter.GetHash(passwordTb.Password); 
-            string sqltext = ($"select * from Employees where empLogin like '{log}' and empPassword like '{pas}' and currentWorker = 1");
-            if (Model.DBConnection.Authorisation(sqltext)==true)
+            string login, password;
+            login = Core.Encrypter.GetHash(loginTb.Text);
+            password = Core.Encrypter.GetHash(passwordTb.Password);
+            string sqlQuery = ($"select * from Employees where empLogin like '{login}' and empPassword like '{password}' and currentWorker = 1");
+            if (Model.DBConnection.Authorisation(sqlQuery) == true) //проверка введенных данных
             {
-                var win = Application.Current.MainWindow;
-                win.Close();
+                var mainWindow = Application.Current.MainWindow;
+                mainWindow.Close(); //закрытие окна
             }
         }
     }
